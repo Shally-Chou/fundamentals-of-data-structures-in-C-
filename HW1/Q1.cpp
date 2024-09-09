@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <cstdlib>
 
 using namespace std ;
 
@@ -14,8 +16,12 @@ int main()
     for(int i = 0 ; i<x ; i++){
         cout << "輸入字串" << i+1 << " : " << endl ;
         cin >> arr[i] ;
-        if(strlen(arr[i]) > y){
-            
+        
+        if( (int)strlen(arr[i]) > y){
+            cout << "the lenth must < " << y << ",please enter again" << endl ;
+            i-- ;
+        }
+        
     }
     
 
