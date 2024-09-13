@@ -16,7 +16,7 @@ int main() {
         cin >> arr[i];
 
         if (arr[i].length() > y) {
-            cout << "the length must < " << y << ", please enter again" << endl;
+            cout << "the length must <= " << y << ", please enter again" << endl;
             i--;
         }
     }
