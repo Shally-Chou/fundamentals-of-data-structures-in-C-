@@ -9,7 +9,7 @@ int main() {
     cin >> x;   // 字串數量
     cin >> y;   // 字串長度
 
-    char** arr = (char**)malloc(x * sizeof(char*));    // 分配字串指標陣列
+    char** arr = (char**)malloc(x * sizeof(char*));    //分配字串指標陣列
 
     cout << "請輸入" << x << "個字串" << endl;
     for (int i = 0; i < x; i++) {
@@ -25,8 +25,8 @@ int main() {
         }
     }
 
-    for (int i = 0; i < x - 1; i++) {
-        for (int j = 0; j < x - i - 1; j++) {
+    for (int i = 0; i < x - 1; i++) {    //就像3個數字只需要換兩次 所以是x-1次
+        for (int j = 0; j < x - i - 1; j++) {    //每過跑一次loop最後的數字都確定是最小 就不用再跑 所以x-1-i
             if (arr[j][0] < arr[j + 1][0]) {
                 char* temp = arr[j]; 
                 arr[j] = arr[j + 1]; 
