@@ -9,7 +9,7 @@ int main() {
     cin >> x;   // 字串數量
     cin >> y;   // 字串長度
 
-    char** arr = (char**)malloc(x * sizeof(char*));
+    char** arr = (char**)malloc(x * sizeof(char*));    // 分配字串指標陣列
 
     cout << "請輸入" << x << "個字串" << endl;
     for (int i = 0; i < x; i++) {
@@ -19,7 +19,7 @@ int main() {
         cin >> arr[i];
 
         if (strlen(arr[i]) > y) {
-            cout << "the length must < " << y << ", please enter again" << endl;
+            cout << "the length must <= " << y << ", please enter again" << endl;
             free(arr[i]); 
             i--;
         }
