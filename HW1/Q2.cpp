@@ -11,7 +11,7 @@ int main()
     cin.ignore();    //忽略前一行輸入緩衝區中保留的'/n'
     string* arr = new string[x];
     
-    cout << "請輸入" << x << "個姓名" << endl;
+    cout << "請輸入" << x << "個姓名 :" << endl;
     for(int i = 0 ; i < x ; i++){
         getline(cin, arr[i]);    //用getline才能get整行input cin遇到空格就停了
     }
