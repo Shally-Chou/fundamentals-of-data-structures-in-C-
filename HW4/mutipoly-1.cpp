@@ -20,28 +20,28 @@ struct Node {
     Node(int c, int e) : coef(c), exp(e), next(nullptr) {}
 };
 
-void insertNode(Node*& head, int coef, int exp) {
+void insertNode(Node*& head, int coef, int exp) {    //用&就算head改變她也能跟著變=直接操作head本身 沒&就是操作她的副本而已=只有在函式內部有效 出去後head還是原本的值
     Node* newNode = new Node(coef, exp);    //建新點
-    if (!head || head->exp < exp) {
-        newNode->next = head;
+    if (!head || head->exp < exp) {    //前面是原本的 後面是新的 成立就更新 按降冪
+        newNode->next = head;    //先換的話會找不到原本head的位置
         head = newNode;
     } else {
         Node* temp = head;
-        while (temp->next && temp->next->exp >= exp) {
+        while (temp->next && temp->next->exp >= exp) {    //前面old後面new old>=new往下一個比
             temp = temp->next;
         }
-        newNode->next = temp->next;
-        temp->next = newNode;
+        newNode->next = temp->next;    //old link give to new one
+        temp->next = newNode;    //原本old前面的那個node point to new one
     }
 }
 
 void com_same_term(Node*& head) {   //com=combine
     Node* current = head;
-    while (current && current->next) {
+    while (current && current->next) {    //只要next!=null就給我跑
         if (current->exp == current->next->exp) {
             current->coef += current->next->coef;
             Node* temp = current->next;
-            current->next = current->next->next;
+            current->next = current->next->next;    //保存要被刪的link 刪掉就找不到了
             delete temp;
         } else {
             current = current->next;
@@ -49,18 +49,18 @@ void com_same_term(Node*& head) {   //com=combine
     }
 }
 
-void printPoly(Node* head) {
+void printPoly(Node* head) {    //單純讀數據不要用&比較好 才不會修改到數值
     while (head) {
         cout << head->coef << "x^" << head->exp;
-        if (head->next) cout << " + ";
+        if (head->next) cout << " + ";    //when next!=0 count
         head = head->next;
     }
     cout << endl;
 }
 
-Node* multiPoly(Node* poly1, Node* poly2) {
+Node* multiPoly(Node* poly1, Node* poly2) {    //結構中的一員
     Node* result = nullptr;
-    for (Node* p1 = poly1; p1; p1 = p1->next) {
+    for (Node* p1 = poly1; p1; p1 = p1->next) {    //開始point to poly1 head, if p1!=0 run
         for (Node* p2 = poly2; p2; p2 = p2->next) {
             int coef = p1->coef * p2->coef;
             int exp = p1->exp + p2->exp;
@@ -127,8 +127,8 @@ int main()
     cout << "poly1 * poly2 = ";
     printPoly(result);
 
-    double execTime = double(end - start) / CLOCKS_PER_SEC;
-    cout << "time resume of poly1 * poly2 = " << fixed << setprecision(6) << execTime << " s" << endl;
+    double time = double(end - start) / CLOCKS_PER_SEC;    //時鐘滴答數transfer to sec, double精確度>float
+    cout << "time resume of poly1 * poly2 = " << fixed << setprecision(6) << time << " s" << endl;    //fix是小數點 set是精確位數
 
     return 0;
 }
