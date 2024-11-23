@@ -128,7 +128,7 @@ int main()
     printPoly(result);
 
     double execTime = double(end - start) / CLOCKS_PER_SEC;
-    cout << "time resume of poly1 * poly2 = " << fixed << setprecision(7) << execTime << " s" << endl;
+    cout << "time resume of poly1 * poly2 = " << fixed << setprecision(6) << execTime << " s" << endl;
 
     return 0;
 }
