@@ -8,6 +8,7 @@ output : 1 * 2 所耗時間
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
 
 using namespace std;
 
@@ -127,7 +128,7 @@ int main()
     printPoly(result);
 
     double execTime = double(end - start) / CLOCKS_PER_SEC;
-    cout << "time resume of poly1 * poly2 = " << execTime << " s" << endl;
+    cout << "time resume of poly1 * poly2 = " << fixed << setprecision(7) << execTime << " s" << endl;
 
     return 0;
 }
