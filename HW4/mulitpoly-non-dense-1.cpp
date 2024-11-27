@@ -68,10 +68,10 @@ int main() {
 
         // Non-Dense: 指數不連續
         for (int i = 0; i < m; ++i) {
-            insertNode(poly1, 1, rand() % 100);  // 隨機生成多項式
+            insertNode(poly1, 1, rand() % 50+1);  // 隨機生成多項式
         }
         for (int i = 0; i < m; ++i) {
-            insertNode(poly2, 1, rand() % 100);  // 隨機生成多項式
+            insertNode(poly2, 1, rand() % 50+1);  // 隨機生成多項式
         }
 
         // 計算多項式相乘
