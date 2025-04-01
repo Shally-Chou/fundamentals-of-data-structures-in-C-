@@ -73,7 +73,7 @@ int main() {
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end - start;
 
-    cout << "\n排序時間: " << fixed << setprecision(6) << duration.count() << endl;
+    cout << "\n排序時間: " << fixed << setprecision(8) << duration.count() << endl;
 
     if(n<=1000){
         ofstream outfile("quick_sorted.txt");
