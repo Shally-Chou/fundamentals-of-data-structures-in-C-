@@ -1,12 +1,13 @@
 /******************************************************************************
 設pivot分兩半的那個
 *******************************************************************************/
-#include <iostream>    // 輸入輸出流操作(cout/cin)
-#include <vector>      // 容器類別模板
-#include <cstdlib>     // 亂數生成函式(rand/srand)
-#include <ctime>       // 時間相關函式(time)
-#include <chrono>      // 高精度時間測量
-#include <fstream>     // 檔案流操作
+#include <iostream>    
+#include <vector>      
+#include <cstdlib>     
+#include <ctime>       
+#include <chrono>      
+#include <fstream>     
+#include <iomanip>
 
 using namespace std;
 
@@ -72,7 +73,7 @@ int main() {
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end - start;
 
-    cout << "\n排序時間: " << duration.count() << " 秒" << endl;
+    cout << "\n排序時間: " << fixed << setprecision(6) << duration.count() << endl;
 
     if(n<=1000){
         ofstream outfile("quick_sorted.txt");
