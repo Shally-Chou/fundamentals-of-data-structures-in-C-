@@ -17,20 +17,20 @@ void generateRandomNumbers(vector<int>& arr, int n) {
     }
 }
 
-int partition(vector<int>& arr, int low, int high, bool reverse) {
-    int pivotIndex = low + rand() % (high - low + 1); // 隨機選擇基準點
-    swap(arr[pivotIndex], arr[high]);  // 將基準點移到最後
-    int pivot = arr[high];
-    int i = low - 1;
+int partition(vector<int>& arr, int low, int high, bool reverse) {    //arr去引用 不用拷貝全部 讚
+    int pivotIndex = low + rand() % (high - low + 1);    //先隨機選pviot 避免worst case happen(用三數中位數也行)
+    swap(arr[pivotIndex], arr[low]);    //pivot放到最前面
+    int pivot = arr[low];
+    int i = low + 1;
 
-    for (int j = low; j < high; ++j) {
-        if ((!reverse && arr[j] <= pivot) || (reverse && arr[j] >= pivot)) {
+    for (int j = low + 1; j <= high; ++j) {  
+        if ((!reverse && arr[j] < pivot) || (reverse && arr[j] > pivot)) {  
+            swap(arr[i], arr[j]);
             i++;
-            swap(arr[i], arr[j]);  // 交換符合條件的元素
         }
     }
-    swap(arr[i + 1], arr[high]);  // 將基準點放到正確位置
-    return i + 1;
+    swap(arr[low], arr[i - 1]);    //把pivot放回正確位置
+    return i - 1;
 }
 
 void quickSort(vector<int>& arr, int low, int high, bool reverse) {
@@ -59,30 +59,27 @@ int main() {
     }
     cout << endl;
 
-    auto start = chrono::high_resolution_clock::now();
+    auto start = chrono::high_resolution_clock::now();    //clock()回傳的是CPU時間 如果同時在用其他東西會不準 但quicksort本身就用CPU算所以沒差多少
     quickSort(arr, 0, arr.size() - 1, reverse);
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end - start;
 
     cout << "\n排序時間: " << duration.count() << " 秒" << endl;
 
-
     if(n<=1000){
         ofstream outfile("quick_sorted.txt");
         if (outfile.is_open()) {
             for (int num : arr) {
-                outfile << num << "\n";  // 每個數字佔一行
+                outfile << num << "\n";
             }
             outfile.close();
             cout << "已儲存排序結果至 quick_sorted.txt" << endl;
         } 
         else {
-            cerr << "無法開啟輸出檔案！" << endl;
+            cerr << "無法開啟輸出檔案！" << endl;    //cerr可以馬上報錯 專門輸出錯誤訊息的 cout就只是輸出 可能有緩衝
         }
     }
     
-
-    // 只有當數量小於或等於100時才在終端機中打印排序後的數字
     if (n <= 100) {
         cout << "排序後前10個元素: ";
         for (int i = 0; i < 10 && i < arr.size(); ++i) {
