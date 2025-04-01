@@ -11,9 +11,9 @@
 using namespace std;
 
 void generateRandomNumbers(vector<int>& arr, int n) {
-    srand(time(0));  // 用當前時間初始化亂數種子
+    srand(time(0));    //用時間當亂數種子
     for (int i = 0; i < n; ++i) {
-        arr.push_back(rand() % 50000 + 1); // 生成1-50000的亂數
+        arr.push_back(rand() % 50000 + 1);    //用arr[i]=rand() % 50000 + 1的話要先給n個空間才能這樣搞 常用的但這裡會比較麻煩
     }
 }
 
@@ -35,9 +35,9 @@ int partition(vector<int>& arr, int low, int high, bool reverse) {
 
 void quickSort(vector<int>& arr, int low, int high, bool reverse) {
     if (low < high) {
-        int pi = partition(arr, low, high, reverse);
-        quickSort(arr, low, pi - 1, reverse);
-        quickSort(arr, pi + 1, high, reverse);
+        int pi = partition(arr, low, high, reverse);    //find pivot position
+        quickSort(arr, low, pi - 1, reverse);    //pivot左邊做遞迴
+        quickSort(arr, pi + 1, high, reverse);    //pivot右邊做遞迴
     }
 }
 
@@ -48,10 +48,10 @@ int main() {
     cin >> n;
     cout << "請輸入排序順序 (a 表示遞增, d 表示遞減): ";
     cin >> order;
-    bool reverse = (order == 'd');
+    bool reverse = (order == 'd');    //d=true遞減 a=false遞增
 
     vector<int> arr;
-    generateRandomNumbers(arr, n);
+    generateRandomNumbers(arr, n);    //上去產生n個random num
 
     cout << "\n生成的數組前10個元素（共" << n << "個）: ";
     for (int i = 0; i < 10 && i < arr.size(); ++i) {
