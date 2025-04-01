@@ -68,12 +68,6 @@ int main() {
     vector<int> arr;
     generateRandomNumbers(arr, n);
 
-    cout << "\n生成的數組前10個元素（共" << n << "個）: ";
-    for (int i = 0; i < 10 && i < arr.size(); ++i) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-
     auto start = chrono::high_resolution_clock::now();
     mergeSort(arr, 0, arr.size() - 1, reverse);
     auto end = chrono::high_resolution_clock::now();
