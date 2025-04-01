@@ -19,18 +19,27 @@ void generateRandomNumbers(vector<int>& arr, int n) {
 
 int partition(vector<int>& arr, int low, int high, bool reverse) {    //arr去引用 不用拷貝全部 讚
     int pivotIndex = low + rand() % (high - low + 1);    //先隨機選pviot 避免worst case happen(用三數中位數也行)
-    swap(arr[pivotIndex], arr[low]);    //pivot放到最前面
+    swap(arr[pivotIndex], arr[low]);    //選好的pivot放到最前面
     int pivot = arr[low];
     int i = low + 1;
+    int j = high;
 
-    for (int j = low + 1; j <= high; ++j) {  
-        if ((!reverse && arr[j] < pivot) || (reverse && arr[j] > pivot)) {  
-            swap(arr[i], arr[j]);
-            i++;
+    while (true) {
+        while (i <= j && ((!reverse && arr[i] < pivot) || (reverse && arr[i] > pivot))) {
+            i++;    //往後找比pivot大的數
         }
+        while (i <= j && ((!reverse && arr[j] > pivot) || (reverse && arr[j] < pivot))) {
+            j--;    //往前找比pivot小的數
+        }
+        if (i >= j) break; 
+
+        swap(arr[i], arr[j]);
+        i++;
+        j--;
     }
-    swap(arr[low], arr[i - 1]);    //把pivot放回正確位置
-    return i - 1;
+
+    swap(arr[low], arr[j]);    //把pivot放回正確位置
+    return j;    //返回pivot新位置
 }
 
 void quickSort(vector<int>& arr, int low, int high, bool reverse) {
