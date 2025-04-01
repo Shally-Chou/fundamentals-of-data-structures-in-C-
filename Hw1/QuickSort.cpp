@@ -17,9 +17,6 @@ void generateRandomNumbers(vector<int>& arr, int n) {
     }
 }
 
-/**
- * 快速排序分割函式
- */
 int partition(vector<int>& arr, int low, int high, bool reverse) {
     int pivotIndex = low + rand() % (high - low + 1); // 隨機選擇基準點
     swap(arr[pivotIndex], arr[high]);  // 將基準點移到最後
@@ -36,7 +33,6 @@ int partition(vector<int>& arr, int low, int high, bool reverse) {
     return i + 1;
 }
 
-// 快速排序遞迴主體
 void quickSort(vector<int>& arr, int low, int high, bool reverse) {
     if (low < high) {
         int pi = partition(arr, low, high, reverse);
@@ -70,17 +66,21 @@ int main() {
 
     cout << "\n排序時間: " << duration.count() << " 秒" << endl;
 
-    // 寫入輸出檔案
-    ofstream outfile("quick_sorted.txt");
-    if (outfile.is_open()) {
-        for (int num : arr) {
-            outfile << num << "\n";  // 每個數字佔一行
+
+    if(n<=1000){
+        ofstream outfile("quick_sorted.txt");
+        if (outfile.is_open()) {
+            for (int num : arr) {
+                outfile << num << "\n";  // 每個數字佔一行
+            }
+            outfile.close();
+            cout << "已儲存排序結果至 quick_sorted.txt" << endl;
+        } 
+        else {
+            cerr << "無法開啟輸出檔案！" << endl;
         }
-        outfile.close();
-        cout << "已儲存排序結果至 quick_sorted.txt" << endl;
-    } else {
-        cerr << "無法開啟輸出檔案！" << endl;
     }
+    
 
     // 只有當數量小於或等於100時才在終端機中打印排序後的數字
     if (n <= 100) {
@@ -89,11 +89,8 @@ int main() {
             cout << arr[i] << " ";
         }
         cout << endl;
-        cout << "排序後所有元素:\n";
-        for (int num : arr) {
-            cout << num << "\n";  // 每個數字佔一行
-        }
     }
 
     return 0;
 }
+
