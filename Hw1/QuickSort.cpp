@@ -10,11 +10,6 @@
 
 using namespace std;
 
-/**
- * 生成隨機數組
- * @param arr 目標vector容器(傳參考修改)
- * @param n   需要生成的數字數量
- */
 void generateRandomNumbers(vector<int>& arr, int n) {
     srand(time(0));  // 用當前時間初始化亂數種子
     for (int i = 0; i < n; ++i) {
