@@ -62,12 +62,6 @@ int main() {
     vector<int> arr;
     generateRandomNumbers(arr, n);    //上去產生n個random num
 
-    cout << "\n生成的數組前10個元素（共" << n << "個）: ";
-    for (int i = 0; i < 10 && i < arr.size(); ++i) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-
     auto start = chrono::high_resolution_clock::now();    //clock()回傳的是CPU時間 如果同時在用其他東西會不準 但quicksort本身就用CPU算所以沒差多少
     quickSort(arr, 0, arr.size() - 1, reverse);
     auto end = chrono::high_resolution_clock::now();
@@ -89,10 +83,10 @@ int main() {
         }
     }
     
-    if (n <= 100) {
-        cout << "排序後前10個元素: ";
+    if (n > 1000) {
+        cout << "排序後前15個元素: ";
         for (int i = 0; i < 10 && i < arr.size(); ++i) {
-            cout << arr[i] << " ";
+            cout << arr[i] << "\n ";
         }
         cout << endl;
     }
