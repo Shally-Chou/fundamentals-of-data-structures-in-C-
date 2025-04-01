@@ -1,30 +1,23 @@
 /******************************************************************************
 兩個兩個比 直到匯聚成一個排好的(這要搞一個額外的空間)
 *******************************************************************************/
-#include <iostream>    // 輸入輸出流操作(cout/cin)
-#include <vector>      // 容器類別模板
-#include <cstdlib>     // 亂數生成函式(rand/srand)
-#include <ctime>       // 時間相關函式(time)
-#include <chrono>      // 高精度時間測量
-#include <fstream>     // 檔案流操作
+#include <iostream>   
+#include <vector> 
+#include <cstdlib>  
+#include <ctime>  
+#include <chrono> 
+#include <fstream> 
+#include <iomanip>
 
 using namespace std;
 
-/**
- * 生成隨機數組
- * @param arr 目標vector容器(傳參考修改)
- * @param n   需要生成的數字數量
- */
 void generateRandomNumbers(vector<int>& arr, int n) {
-    srand(time(0));  // 用當前時間初始化亂數種子
+    srand(time(0)); 
     for (int i = 0; i < n; ++i) {
-        arr.push_back(rand() % 50000 + 1); // 生成1-50000的亂數
+        arr.push_back(rand() % 50000 + 1); 
     }
 }
 
-/**
- * 歸併排序合併函式
- */
 void merge(vector<int>& arr, int left, int mid, int right, bool reverse) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -53,7 +46,7 @@ void merge(vector<int>& arr, int left, int mid, int right, bool reverse) {
     while (j < n2) arr[k++] = R[j++];
 }
 
-// 歸併排序遞迴主體
+
 void mergeSort(vector<int>& arr, int left, int right, bool reverse) {
     if (left < right) {
         int mid = left + (right - left) / 2;
@@ -68,7 +61,7 @@ int main() {
     char order;
     cout << "請輸入要產生的隨機數字數量: ";
     cin >> n;
-    cout << "請輸入排序順序 (a 表示遞增, d 表示遞減): ";
+    cout << "請輸入排序順序 (a 表遞增, d 表遞減): ";
     cin >> order;
     bool reverse = (order == 'd');
 
@@ -86,30 +79,26 @@ int main() {
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end - start;
 
-    cout << "\n排序時間: " << duration.count() << " 秒" << endl;
-
-    // 寫入輸出檔案
-    ofstream outfile("merge_sorted.txt");
-    if (outfile.is_open()) {
-        for (int num : arr) {
-            outfile << num << "\n";  // 每個數字佔一行
+    cout << "\n排序時間: " << fixed << setprecision(8) << duration.count() << endl;
+    
+    if(n<=1000){
+        ofstream outfile("merge_sorted.txt");
+        if (outfile.is_open()) {
+            for (int num : arr) {
+                outfile << num << "\n";
+            }
+            outfile.close();
+            cout << "已儲存排序結果至 merge_sorted.txt" << endl;
+        } 
+        else {
+            cerr << "無法開啟輸出檔案！" << endl;
         }
-        outfile.close();
-        cout << "已儲存排序結果至 merge_sorted.txt" << endl;
-    } else {
-        cerr << "無法開啟輸出檔案！" << endl;
     }
 
-    // 只有當數量小於或等於100時才在終端機中打印排序後的數字
-    if (n <= 100) {
+    if (n > 1000) {
         cout << "排序後前10個元素: ";
         for (int i = 0; i < 10 && i < arr.size(); ++i) {
             cout << arr[i] << " ";
-        }
-        cout << endl;
-        cout << "排序後所有元素:\n";
-        for (int num : arr) {
-            cout << num << "\n";  // 每個數字佔一行
         }
     }
 
