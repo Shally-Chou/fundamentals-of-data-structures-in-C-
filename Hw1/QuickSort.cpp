@@ -23,16 +23,15 @@ int partition(vector<int>& arr, int low, int high, bool reverse) {    //arr去�
     int pivot = arr[low];
     int i = low + 1;
     int j = high;
-
-    while (true) {
-        while (i <= j && ((!reverse && arr[i] < pivot) || (reverse && arr[i] > pivot))) {
+    while (i <= j) { 
+        while ((!reverse && arr[i] < pivot) || (reverse && arr[i] > pivot)) {
             i++;    //往後找比pivot大的數
         }
-        while (i <= j && ((!reverse && arr[j] > pivot) || (reverse && arr[j] < pivot))) {
+        while ((!reverse && arr[j] > pivot) || (reverse && arr[j] < pivot)) {
             j--;    //往前找比pivot小的數
         }
-        if (i >= j) break; 
 
+        if (i >= j) break;
         swap(arr[i], arr[j]);
         i++;
         j--;
