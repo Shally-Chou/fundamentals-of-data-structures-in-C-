@@ -91,7 +91,7 @@ int main() {
 
     if (n > 1000) {
         cout << "排序後前15個元素: ";
-        for (int i = 0; i < 10 && i < arr.size(); ++i) {
+        for (int i = 0; i < 15 && i < arr.size(); ++i) {
             cout << "\n" << arr[i] << " ";
         }
     }
