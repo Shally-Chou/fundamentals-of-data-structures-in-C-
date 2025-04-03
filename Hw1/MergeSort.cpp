@@ -19,17 +19,17 @@ void generateRandomNumbers(vector<int>& arr, int n) {
 }
 
 void merge(vector<int>& arr, int left, int mid, int right, bool reverse) {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+    int n1 = mid - left + 1;    //左長度
+    int n2 = right - mid;    //右長度
 
     vector<int> L(n1), R(n2);
 
-    for (int i = 0; i < n1; ++i)
+    for (int i = 0; i < n1; ++i)    //copy一份因為等等會改到值
         L[i] = arr[left + i];
     for (int j = 0; j < n2; ++j)
         R[j] = arr[mid + 1 + j];
 
-    int i = 0, j = 0, k = left;
+    int i = 0, j = 0, k = left;    //這裡的left是放進去區間的left
 
     while (i < n1 && j < n2) {
         if ((!reverse && L[i] <= R[j]) || (reverse && L[i] >= R[j])) {
@@ -42,17 +42,17 @@ void merge(vector<int>& arr, int left, int mid, int right, bool reverse) {
         k++;
     }
 
-    while (i < n1) arr[k++] = L[i++];
+    while (i < n1) arr[k++] = L[i++];    //如果其中一個已經放完就把剩的直接加到後面
     while (j < n2) arr[k++] = R[j++];
 }
 
 
-void mergeSort(vector<int>& arr, int left, int right, bool reverse) {
+void mergeSort(vector<int>& arr, int left, int right, bool reverse) {    //arr需要先拆成單一元素 這樣才算排好了 mergesort只合併排好的
     if (left < right) {
         int mid = left + (right - left) / 2;
-        mergeSort(arr, left, mid, reverse);
-        mergeSort(arr, mid + 1, right, reverse);
-        merge(arr, left, mid, right, reverse);
+        mergeSort(arr, left, mid, reverse);    //左遞迴
+        mergeSort(arr, mid + 1, right, reverse);    //右遞迴
+        merge(arr, left, mid, right, reverse);    //每層mergesort都會呼叫merge
     }
 }
 
