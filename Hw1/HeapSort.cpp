@@ -1,12 +1,13 @@
 /******************************************************************************
 先搞成heap tree, max or min看輸遞增還遞減 之後把top跟最後那個換位置 原top值就能排了 一直重複直到排完
 *******************************************************************************/
-#include <iostream>    // 輸入輸出流操作(cout/cin)
-#include <vector>      // 容器類別模板
-#include <cstdlib>     // 亂數生成函式(rand/srand)
-#include <ctime>       // 時間相關函式(time)
-#include <chrono>      // 高精度時間測量
-#include <fstream>     // 檔案流操作
+#include <iostream>   
+#include <vector>    
+#include <cstdlib>   
+#include <ctime>    
+#include <chrono>   
+#include <fstream> 
+#include <iomanip>
 
 using namespace std;
 
@@ -18,12 +19,12 @@ void generateRandomNumbers(vector<int>& arr, int n) {
 }
 
 void heapify(vector<int>& arr, int n, int i, bool reverse) {
-    int target = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
+    int target = i;    //target就top 父節點
+    int left = (2 * i) + 1;    //complete binary tree的左右點算法
+    int right = (2 * i) + 2;
 
     if (!reverse) {    //max heap tree
-        if (left < n && arr[left] > arr[target]) target = left;
+        if (left < n && arr[left] > arr[target]) target = left;    //left超過堆的大小代表已經排完
         if (right < n && arr[right] > arr[target]) target = right;
     } 
     else {    //min heap tree
@@ -31,15 +32,15 @@ void heapify(vector<int>& arr, int n, int i, bool reverse) {
         if (right < n && arr[right] < arr[target]) target = right;
     }
 
-    if (target != i) {
-        swap(arr[i], arr[target]);
-        heapify(arr, n, target, reverse);
+    if (target != i) {    //i不是max/min時重排heap tree
+        swap(arr[i], arr[target]);    //max/min為target 把target放到最上面的父節點i
+        heapify(arr, n, target, reverse);    //重排heap tree
     }
 }
 
 void justify(vector<int>& arr, bool reverse) {
     int n = arr.size();
-    for (int i = n / 2 - 1; i >= 0; --i) {
+    for (int i = n/2 - 1; i >= 0; --i) {    //i是代表有子節點的node的數目=父節點的數目
         heapify(arr, n, i, reverse);
     }
 }
