@@ -49,9 +49,6 @@ void heapSort(vector<int>& arr, bool reverse) {
 
     justify(arr, reverse);
 
-    for (int i = n/2 - 1; i >= 0; --i)
-        heapify(arr, n, i, reverse);
-
     for (int i = n-1; i > 0; --i) {
         swap(arr[0], arr[i]);
         heapify(arr, i, 0, reverse);
