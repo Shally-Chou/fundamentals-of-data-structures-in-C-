@@ -11,24 +11,21 @@
 using namespace std;
 
 void generateRandomNumbers(vector<int>& arr, int n) {
-    srand(time(0));  // 用當前時間初始化亂數種子
+    srand(time(0)); 
     for (int i = 0; i < n; ++i) {
-        arr.push_back(rand() % 50000 + 1); // 生成1-50000的亂數
+        arr.push_back(rand() % 50000 + 1);
     }
 }
 
-/**
- * 堆排序堆化函式
- */
 void heapify(vector<int>& arr, int n, int i, bool reverse) {
     int target = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if (!reverse) { // 最大堆
+    if (!reverse) { 
         if (left < n && arr[left] > arr[target]) target = left;
         if (right < n && arr[right] > arr[target]) target = right;
-    } else { // 最小堆
+    } else { 
         if (left < n && arr[left] < arr[target]) target = left;
         if (right < n && arr[right] < arr[target]) target = right;
     }
@@ -39,7 +36,6 @@ void heapify(vector<int>& arr, int n, int i, bool reverse) {
     }
 }
 
-// 堆排序主體
 void heapSort(vector<int>& arr, bool reverse) {
     int n = arr.size();
 
@@ -71,27 +67,29 @@ int main() {
 
     cout << "\n排序時間: " << fixed << setprecision(8) << duration.count() << endl;
 
-    ofstream outfile("heap_sorted.txt");
-    if (outfile.is_open()) {
-        for (int num : arr) {
-            outfile << num << "\n"; 
+    if(n <= 1000){
+        ofstream outfile("heap_sorted.txt");
+        if (outfile.is_open()) {
+            for (int num : arr) {
+                outfile << num << "\n"; 
+            }
+            outfile.close();
+            cout << "已儲存排序結果至 heap_sorted.txt" << endl;
+        } 
+        else {
+            cerr << "無法開啟輸出檔案！" << endl;
         }
-        outfile.close();
-        cout << "已儲存排序結果至 heap_sorted.txt" << endl;
-    } else {
-        cerr << "無法開啟輸出檔案！" << endl;
     }
-
-    // 只有當數量小於或等於100時才在終端機中打印排序後的數字
-    if (n <= 100) {
-        cout << "排序後前10個元素: ";
-        for (int i = 0; i < 10 && i < arr.size(); ++i) {
-            cout << arr[i] << " ";
+    
+    if (n > 1000) {
+        cout << "排序後前15個元素: ";
+        for (int i = 0; i < 15 && i < arr.size(); ++i) {
+            cout << "\n" << arr[i] << " ";
         }
         cout << endl;
         cout << "排序後所有元素:\n";
         for (int num : arr) {
-            cout << num << "\n";  // 每個數字佔一行
+            cout << num << "\n"; 
         }
     }
 
