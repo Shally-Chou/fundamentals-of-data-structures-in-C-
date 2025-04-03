@@ -22,10 +22,11 @@ void heapify(vector<int>& arr, int n, int i, bool reverse) {
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if (!reverse) { 
+    if (!reverse) {    //max heap tree
         if (left < n && arr[left] > arr[target]) target = left;
         if (right < n && arr[right] > arr[target]) target = right;
-    } else { 
+    } 
+    else {    //min heap tree
         if (left < n && arr[left] < arr[target]) target = left;
         if (right < n && arr[right] < arr[target]) target = right;
     }
@@ -36,8 +37,17 @@ void heapify(vector<int>& arr, int n, int i, bool reverse) {
     }
 }
 
+void justify(vector<int>& arr, bool reverse) {
+    int n = arr.size();
+    for (int i = n / 2 - 1; i >= 0; --i) {
+        heapify(arr, n, i, reverse);
+    }
+}
+
 void heapSort(vector<int>& arr, bool reverse) {
     int n = arr.size();
+
+    justify(arr, reverse);
 
     for (int i = n/2 - 1; i >= 0; --i)
         heapify(arr, n, i, reverse);
