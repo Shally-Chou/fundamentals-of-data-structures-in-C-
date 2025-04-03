@@ -10,11 +10,6 @@
 
 using namespace std;
 
-/**
- * 生成隨機數組
- * @param arr 目標vector容器(傳參考修改)
- * @param n   需要生成的數字數量
- */
 void generateRandomNumbers(vector<int>& arr, int n) {
     srand(time(0));  // 用當前時間初始化亂數種子
     for (int i = 0; i < n; ++i) {
@@ -69,24 +64,17 @@ int main() {
     vector<int> arr;
     generateRandomNumbers(arr, n);
 
-    cout << "\n生成的數組前10個元素（共" << n << "個）: ";
-    for (int i = 0; i < 10 && i < arr.size(); ++i) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-
     auto start = chrono::high_resolution_clock::now();
     heapSort(arr, reverse);
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end - start;
 
-    cout << "\n排序時間: " << duration.count() << " 秒" << endl;
+    cout << "\n排序時間: " << fixed << setprecision(8) << duration.count() << endl;
 
-    // 寫入輸出檔案
     ofstream outfile("heap_sorted.txt");
     if (outfile.is_open()) {
         for (int num : arr) {
-            outfile << num << "\n";  // 每個數字佔一行
+            outfile << num << "\n"; 
         }
         outfile.close();
         cout << "已儲存排序結果至 heap_sorted.txt" << endl;
