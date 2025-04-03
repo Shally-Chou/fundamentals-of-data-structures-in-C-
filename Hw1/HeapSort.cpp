@@ -60,7 +60,7 @@ int main() {
     char order;
     cout << "請輸入要產生的隨機數字數量: ";
     cin >> n;
-    cout << "請輸入排序順序 (a 表示遞增, d 表示遞減): ";
+    cout << "請輸入排序順序 (a 表遞增, d 表遞減): ";
     cin >> order;
     bool reverse = (order == 'd');
 
@@ -94,10 +94,6 @@ int main() {
             cout << "\n" << arr[i] << " ";
         }
         cout << endl;
-        cout << "排序後所有元素:\n";
-        for (int num : arr) {
-            cout << num << "\n"; 
-        }
     }
 
     return 0;
