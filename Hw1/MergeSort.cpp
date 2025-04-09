@@ -31,7 +31,7 @@ void merge(vector<int>& arr, int left, int mid, int right, bool reverse) {
 
     int i = 0, j = 0, k = left;    //這裡的left是放進去區間的left
 
-    while (i < n1 && j < n2) {
+    while (i < n1 && j < n2) {    //只要裡面有東西
         if ((!reverse && L[i] <= R[j]) || (reverse && L[i] >= R[j])) {
             arr[k] = L[i];
             i++;
