@@ -9,90 +9,90 @@
 using namespace std;
 
 // 產生graph
-void generateRandomGraph(int n, int e, vector<vector<int>>& adjMatrix, vector<vector<int>>& adjList) {    //
-    srand(time(0));    //
-    set<pair<int, int>> edgeSet;    //
+void generateRandomGraph(int n, int e, vector<vector<int>>& adjMatrix, vector<vector<int>>& adjList) {    //二維 用引用的 才不用再複製一份 修改結果才會反映給呼叫者
+    srand(time(0));    //time(0)回傳的是現在的秒數 這樣每次執行時產生的亂數序列都不一樣
+    set<pair<int, int>> edgeSet;    //set表集合 pair就是晚點a,d為edge一組成線 且用set可快速確認這個組合有無出現過
 
-    while ((int)edgeSet.size() < e) {
-        int u = rand() % n;    //設vertex
+    while ((int)edgeSet.size() < e) {    //int顯式轉型 有時候回傳的是size_t（無號整數） 在生成的邊<e之前都要跑
+        int u = rand() % n;    //設vertex 範圍:0 ~ n-1
         int v = rand() % n;
         if (u != v) {    //確保不是自己走到自己
-            int a = min(u, v), b = max(u, v);    //
-            if (edgeSet.count({a, b}) == 0) {    //如果這條路還沒被記錄到
+            int a = min(u, v), b = max(u, v);    //a會是兩者中小的那個 b反之 因為上面用set所以不用擔心重複出現的問題
+            if (edgeSet.count({a, b}) == 0) {    //如果這條路還沒被記錄到(==0就是沒紀錄過)
                 edgeSet.insert({a, b});    //加進去
                 adjMatrix[a][b] = adjMatrix[b][a] = 1;    //設矩陣 a,b=b,a 無向圖 長度一律設為1
-                adjList[a].push_back(b);    //
-                adjList[b].push_back(a);    //
+                adjList[a].push_back(b);    //a有個鄰居是b
+                adjList[b].push_back(a);    //b有個鄰居是a
             }
         }
     }
 }
 
 // 匯出CSV file
-void exportEdgeList(const vector<vector<int>>& graph, const string& filename) {    //
+void exportEdgeList(const vector<vector<int>>& graph, const string& filename) {    //const保證這個函式裡不會改到引用的內容 保護措施
     ofstream file(filename);
     file << "Vertex 1,Vertex 2\n";    //寫入file的第一行
-    int n = graph.size();    //
+    int n = graph.size();    //共有幾個節點
     for (int u = 0; u < n; ++u) {    //歷遍串列
-        for (int v : graph[u]) {    //
+        for (int v : graph[u]) {    //graph[u]這個vector裡的每個元素v都執行一次
             if (u < v) file << u << "," << v << "\n";    //避免邊出現重複
         }
     }
-    file.close();
+    file.close();    //開完要記得關 反正是個好習慣
 }
 
 // DFS 遍歷
-void dfs(int u, vector<bool>& visited, const vector<vector<int>>& graph, vector<vector<int>>& tree) {    //
+void dfs(int u, vector<bool>& visited, const vector<vector<int>>& graph, vector<vector<int>>& tree) {    
     visited[u] = true;    //標記為走過 grey
     for (int v : graph[u]) {    //
         if (!visited[v]) {    //如果連到的點有沒走過的 white
-            tree[u].push_back(v);    //
-            tree[v].push_back(u);    //
-            dfs(v, visited, graph, tree);    //重跑dfs u變成v
+            tree[u].push_back(v);    //u走到v
+            tree[v].push_back(u);    //v也可以走到u 無向圖嘛
+            dfs(v, visited, graph, tree);    //重跑dfs u變成v=從v開始往後走
         }
     }
 }
 
 // BFS 遍歷
-void bfs(int start, vector<bool>& visited, const vector<vector<int>>& graph, vector<vector<int>>& tree) {    //
+void bfs(int start, vector<bool>& visited, const vector<vector<int>>& graph, vector<vector<int>>& tree) {    
     queue<int> q;    //建一個列 放等等要尋訪的東西 像是看1把2,3放進去 看2序列變成3,4,5
     q.push(start);    //把起始點放到列裡面 top是1就把1放進去
     visited[start] = true;    //標記為走過 grey
 
     while (!q.empty()) {    //當列不為空時就一直跑
         int u = q.front(); q.pop();    //最前面的值給u 然後把他從列中刪掉
-        for (int v : graph[u]) {
+        for (int v : graph[u]) {    //graph[u]這個vector裡的每個元素v都執行一次=看鄰居
             if (!visited[v]) {    //如果連到的點有沒走過的 white
                 visited[v] = true;    //過去 標為走過 grey
-                tree[u].push_back(v);    //
-                tree[v].push_back(u);    //
-                q.push(v);    //
+                tree[u].push_back(v);    
+                tree[v].push_back(u);    
+                q.push(v);    //把v放到列中
             }
         }
     }
 }
 
 // 印出鄰接矩陣
-void printAdjMatrix(const vector<vector<int>>& matrix) {    //
-    int n = matrix.size();
+void printAdjMatrix(const vector<vector<int>>& matrix) {    //const保證這個函式裡不會改到引用的內容 保護措施
+    int n = matrix.size();    //這是取得矩陣的大小=節點數n 如果有5個點那矩陣大小就是5x5 matrix.size()就是5
     cout << "    ";
     for (int i = 0; i < n; ++i) cout << i << "  ";    //有幾個數字就印到多少 阿從0開始
     cout << endl;
     for (int i = 0; i < n; ++i) {
         cout << " " << i << " ";
         for (int j = 0; j < n; ++j) {
-            cout << " " << matrix[i][j] << " ";    //
+            cout << " " << matrix[i][j] << " ";    //有連到就1 沒線就0
         }
         cout << endl;
     }
 }
 
 // 印出鄰接串列
-void printAdjList(const vector<vector<int>>& adjList) {    //
-    for (int i = 0; i < adjList.size(); ++i) {    //
-        cout << i << ": ";
-        for (int j : adjList[i]) cout << j << " ";    //
-        cout << endl;    //
+void printAdjList(const vector<vector<int>>& adjList) {    
+    for (int i = 0; i < adjList.size(); ++i) {    //遍歷所有節點 0到n-1(adjList.size-1)
+        cout << i << " : ";
+        for (int j : adjList[i]) cout << j << " ";    //順序看adjList[u].push_back(v) 先push的會先被印出來
+        cout << endl;    
     }
 }
 
