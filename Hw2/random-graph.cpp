@@ -109,32 +109,32 @@ int main() {
         return 0;    //
     }
 
-    vector<vector<int>> adjMatrix(n, vector<int>(n, 0));    //
-    vector<vector<int>> adjList(n);    //
-    generateRandomGraph(n, e, adjMatrix, adjList);    //
+    vector<vector<int>> adjMatrix(n, vector<int>(n, 0));    //每個元素是int的二維 前一個代表橫的總共建n個 後面則是裡面總共放n個0(現在都沒邊初始設0)
+    vector<vector<int>> adjList(n);    //二維 總共有n個節點所以橫的要建n個
+    generateRandomGraph(n, e, adjMatrix, adjList);    
 
     cout << "\n鄰接矩陣 :" << endl;
-    printAdjMatrix(adjMatrix);    //
+    printAdjMatrix(adjMatrix);    
 
     cout << "\n鄰接串列 :" << endl;
-    printAdjList(adjList);    //
+    printAdjList(adjList);    
 
     // 匯出graph
-    exportEdgeList(adjList, "graph_edges.csv");    //
+    exportEdgeList(adjList, "graph_edges.csv");    
 
     // DFS Tree
-    vector<vector<int>> dfs_tree(n);    //
-    vector<bool> visited(n, false);    //
-    for (int i = 0; i < n; ++i)
-        if (!visited[i]) dfs(i, visited, adjList, dfs_tree);    //
-    exportEdgeList(dfs_tree, "dfs_tree_edges.csv");    //
+    vector<vector<int>> dfs_tree(n);    
+    vector<bool> visited(n, false);    //用來記錄是否走過 共有n個vertex 因為用bool所以用false(都還沒走過初始為0)
+    for (int i = 0; i < n; ++i)    //每個點都要過一遍 可能有不連通的
+        if (!visited[i]) dfs(i, visited, adjList, dfs_tree);    //if white 做dfs
+    exportEdgeList(dfs_tree, "dfs_tree_edges.csv");    //全部都走過就輸出
 
     // BFS Tree
     vector<vector<int>> bfs_tree(n);
-    fill(visited.begin(), visited.end(), false);    //
-    for (int i = 0; i < n; ++i)
-        if (!visited[i]) bfs(i, visited, adjList, bfs_tree);    //
-    exportEdgeList(bfs_tree, "bfs_tree_edges.csv");    //
+    fill(visited.begin(), visited.end(), false);    //因為剛剛上面用過 所以把起點到終點所有點都恢復原廠設定
+    for (int i = 0; i < n; ++i)    //確保大家都會走到 超貼心欸幹
+        if (!visited[i]) bfs(i, visited, adjList, bfs_tree);    //if white 做bfs
+    exportEdgeList(bfs_tree, "bfs_tree_edges.csv");    //全部都走過就輸出
 
     // 印出 DFS/BFS Tree 的鄰接串列
     cout << "\nDFS Tree 的鄰接串列:" << endl;
