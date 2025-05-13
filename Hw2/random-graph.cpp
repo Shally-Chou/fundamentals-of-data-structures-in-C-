@@ -29,8 +29,8 @@ void generateRandomGraph(int n, int e, vector<vector<int>>& adjMatrix, vector<ve
     }
     for (int i = 0; i < n; ++i) {    //每個人都要排
         sort(adjList[i].begin(), adjList[i].end());    //從第一個到最後一個元素都要排 end是指向last element的後一個位置
-        auto last = unique(adjList[i].begin(), adjList[i].end());    //因為unique會回傳一個iterator（指標） 它的型別長得很醜(長) 所以用auto讓編譯器自己推斷型別
-        adjList[i].erase(last, adjList[i].end());    //last:不重複的後一個位置 end:index[n] n是鄰居數量 n=5 index0~4
+        //auto last = unique(adjList[i].begin(), adjList[i].end());    因為unique會回傳一個iterator（指標） 它的型別長得很醜(長) 所以用auto讓編譯器自己推斷型別
+        //adjList[i].erase(last, adjList[i].end());    last:不重複的後一個位置 end:index[n] n是鄰居數量 n=5 index0~4
     }
 }
 
